@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Lottery</title>
+    <style>
+        #clientPage {width: 50%;height: 500px;background-color: #735757;}
+        #adminPage {width: 50%;height: 500px; background-color: rgb(181, 136, 87);}
+        .threeDpages {float: left;}
+    </style>
+</head>
+<body>
+    <div style="height: 20%;">
+        <h1 style="text-align:center;font-size: 50px;">
+           3d lottery 
+        </h1>
+    </div>
+    <div id="clientPage" class="threeDpages">
+        <div style="margin-left: 20px;">
+            <h1>Choose Your Number Here</h1>
+
+
+            <p>YourName</p> 
+            <input type="text"
+            id="nameinput"
+            style="margin-left: 40px;">
+
+
+            <p>Number</p> 
+            <input type="number" min="0" max="999"
+            id="numberinput" 
+            style="margin-left: 40px;">
+
+
+            <p>Click Here to Get Num</p>
+            <button style="margin-left: 40px;"
+            onclick="getUser()">Confirm</button>
+            
+            <p  id="nameParagraph" 
+                style="width: 200px;
+                    background-color: white;
+                    font-size: 25px;">
+            </p>
+        </div>
+    </div>
+
+    <div id="adminPage" class="threeDpages">
+        <div style="margin-left: 20px;">
+            <h1>Choosen Numbers</h1>
+            <p id="numberParagraph" 
+                style="background-color: rgb(228, 239, 239);
+                    width: 200px;
+                    font-size: 60px;
+                    font-style: italic;"></p>
+        </div>
+    </div>
+    
+
+    <script>
+        let nameinput = document.getElementById("nameinput");
+        let nameParagraph = document.getElementById("nameParagraph");
+
+        let numberinput = document.getElementById("numberinput");
+        let numberParagraph = document.getElementById("numberParagraph");
+        let myData=[]
+
+        function arraySize(arr){
+                let sizeOfarray=0;
+                for(let i in arr){
+                    sizeOfarray++;
+                }
+                return sizeOfarray;
+            }
+
+        function checkNumber(numCheck,array){
+            
+            let arraylength= arraySize(array);
+            for(i=0;i<=arraylength;i++){
+                if (array[i]===numCheck){
+                    return 0; 
+                    break;
+                }else if(i===arraylength){
+                    return 1; 
+                }       
+            }
+        }
+
+        function pushFun(original,chosen){
+            let arraylength= arraySize(original);
+            for(let i=0; i<=arraylength ;i++){
+                if(i===arraylength){
+                    console.log(chosen)
+                    original[i]= chosen;
+                    return original; 
+                }
+            
+            }
+        }
+        
+        function getUser(){
+            let inputnum=numberinput.value;
+            if(inputnum<1000) {
+                let x = checkNumber(inputnum,myData);
+                if (x===0){
+                    nameParagraph.textContent=("This 3d Num Is Not Available")
+                    nameParagraph.style.background="red"
+                    nameParagraph.style.color="white"
+                    nameParagraph.style.width="300px"
+                    nameParagraph.style.fontSize="40px"
+                    nameParagraph.style.marginLeft="100px"
+                }else if (x===1){
+                    nameParagraph.textContent=(nameinput.value+"Your Ticket Is Number"+inputnum)
+                    nameParagraph.style.background="white"
+                    nameParagraph.style.color="black"
+                    nameParagraph.style.width="200px"
+                    nameParagraph.style.fontSize="25px"
+                    nameParagraph.style.marginLeft="0px"
+                    let chosenNumberarray = pushFun(myData,inputnum);
+                    numberParagraph.textContent=chosenNumberarray;
+                }
+            }
+        }
+
+    </script>
+
+</body>
+</html>
